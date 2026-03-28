@@ -1,0 +1,55 @@
+import streamlit as st
+from google import genai
+
+# ==========================================
+# 🔑 내 정보 입력하기
+# ==========================================
+GEMINI_API_KEY = "AIzaSyBtTJuybRQo0RP6pGhXTetivcCz3eZiiqk"
+# ==========================================
+
+# 📱 1. 웹 앱의 기본 디자인 설정 (웹 브라우저 탭 이름, 아이콘)
+st.set_page_config(page_title="나만의 주식 비서", page_icon="📈", layout="centered")
+
+# 📱 2. 화면에 보일 제목과 설명 쓰기
+st.title("📈 나만의 AI 주식 비서")
+st.write("버튼을 누르면 AI가 실시간 뉴스를 분석해 오늘의 리포트를 가져옵니다!")
+
+# 🧠 3. AI 분석 기능 (이전과 똑같습니다)
+def get_stock_report():
+    client = genai.Client(api_key=GEMINI_API_KEY)
+    
+    prompt = """
+    너는 전문 주식 애널리스트야. 반드시 구글 검색을 사용하여 오늘 날짜의 가장 최신 뉴스 및 주식 시장 실제 팩트를 확인한 후 아래 항목을 작성해.
+    
+    [중요 규칙]
+    - 웹사이트에 예쁘게 보여줄 거니까, 제목에는 ## 기호를 쓰고 목록에는 - 기호를 써서 '마크다운' 형식으로 깔끔하게 꾸며줘.
+    - 텔레그램에서 쓰던 '|||' 가위표 기호는 이제 절대 쓰지 마! (웹에서는 자를 필요가 없어)
+    
+    1. 🌍 글로벌 이슈 & 미장/국장 요약 (팩트 기반)
+    2. 🇰🇷 금일 국장 핫이슈 예상
+    3. 🔥 당일 핫 섹터 TOP 3
+    4. 🎯 섹터별 대장종목 (최대 3개) 및 추천 이유
+    """
+    
+    response = client.models.generate_content(
+        model='gemini-2.5-flash',
+        contents=prompt,
+        config={'tools': [{'google_search': {}}]} 
+    )
+    return response.text
+
+# 📱 4. 화면에 '분석 시작' 버튼 만들기
+st.divider() # 가로줄 긋기
+
+if st.button("🔄 최신 리포트 분석하기", type="primary"):
+    # 버튼을 누르면 뱅글뱅글 도는 로딩 화면 띄우기
+    with st.spinner('🧠 AI가 실시간 뉴스를 검색하며 리포트를 작성 중입니다. 잠시만 기다려주세요...'):
+        
+        # AI에게 리포트 받아오기
+        report = get_stock_report()
+        
+        # 로딩이 끝나면 성공 메시지 띄우기
+        st.success("✅ 분석 완료!")
+        
+        # 받아온 리포트를 화면에 예쁘게 출력하기
+        st.markdown(report)

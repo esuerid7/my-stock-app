@@ -32,10 +32,10 @@ def get_stock_report():
     """
     
     response = client.models.generate_content(
-        model='models/gemini-1.5-flash',
-        contents=prompt,
-        config={'tools': [{'google_search': {}}]}
-    )
+    model='gemini-1.5-flash-002', # 혹은 'gemini-2.0-flash'
+    contents=prompt,
+    config={'tools': [{'google_search': {}}]} 
+)
     return response.text
 
 # 📱 4. 화면에 '분석 시작' 버튼 만들기

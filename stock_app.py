@@ -32,24 +32,21 @@ def get_stock_report():
     """
     
     response = client.models.generate_content(
-        model='models/gemini-1.5-flash', 
+        model='gemini-2.0-flash', 
         contents=prompt,
         config={'tools': [{'google_search': {}}]} 
     )
     return response.text
 
 # 📱 4. 화면에 '분석 시작' 버튼 만들기
-st.divider() # 가로줄 긋기
+st.divider()
 
 if st.button("🔄 최신 리포트 분석하기", type="primary"):
-    # 버튼을 누르면 뱅글뱅글 도는 로딩 화면 띄우기
-    with st.spinner('🧠 AI가 실시간 뉴스를 검색하며 리포트를 작성 중입니다. 잠시만 기다려주세요...'):
-        
-        # AI에게 리포트 받아오기
-        report = get_stock_report()
-        
-        # 로딩이 끝나면 성공 메시지 띄우기
-        st.success("✅ 분석 완료!")
-        
-        # 받아온 리포트를 화면에 예쁘게 출력하기
-        st.markdown(report)
+    with st.spinner('🧠 AI가 실시간 정보를 분석 중입니다...'):
+        try:
+            report = get_stock_report()
+            st.success("✅ 분석 완료!")
+            st.markdown(report)
+        except Exception as e:
+            st.error(f"🚨 에러가 발생했습니다: {e}")
+            st.info("💡 팁: 구글 API 무료 사용량(하루 20~50회)을 초과했거나 모델 이름이 변경되었을 수 있습니다.")

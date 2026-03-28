@@ -32,7 +32,7 @@ def get_stock_report():
     """
     
     response = client.models.generate_content(
-            model='gemini-1.5-flash-002', # '002'를 붙여서 정밀하게 지정합니다.
+            model='models/gemini-1.5-flash', 
             contents=prompt,
             config={'tools': [{'google_search': {}}]} 
         )

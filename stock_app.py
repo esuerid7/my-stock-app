@@ -33,7 +33,8 @@ def get_stock_report():
     
     response = client.models.generate_content(
         model='gemini-2.5-flash',
-        contents=prompt         
+        contents=prompt,
+        config={'tools': [{'google_search': {}}]}
     )
     return response.text
 

@@ -5,7 +5,7 @@ from google import genai
 # ==========================================
 # 🔑 내 정보 입력하기
 # ==========================================
-GEMINI_API_KEY = "AIzaSyBtTJuybRQo0RP6pGhXTetivcCz3eZiiqk"
+GEMINI_API_KEY = "AIzaSyASGViFJE3YvY26Sb2iIveTCAJqUl3Lxes"
 # ==========================================
 
 st.set_page_config(page_title="GTO 홀덤 마스터", page_icon="♠️")

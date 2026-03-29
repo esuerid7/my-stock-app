@@ -4,7 +4,7 @@ from google import genai
 # ==========================================
 # 🔑 내 정보 입력하기
 # ==========================================
-GEMINI_API_KEY = "AIzaSyBtTJuybRQo0RP6pGhXTetivcCz3eZiiqk"
+GEMINI_API_KEY = "AIzaSyASGViFJE3YvY26Sb2iIveTCAJqUl3Lxes"
 # ==========================================
 
 # 📱 1. 웹 앱의 기본 디자인 설정 (웹 브라우저 탭 이름, 아이콘)
